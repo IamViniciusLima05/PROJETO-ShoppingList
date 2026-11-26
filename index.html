@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1f7a4d">
+  <title>ShoppingList | Lista de compras</title>
+  <meta name="description" content="Lista de compras com seções do mercado, quantidades, preços, total estimado, orçamento e compartilhamento pelo WhatsApp.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="topo__linha">
+      <h1 class="marca">🛒 Lista</h1>
+      <select id="listas" aria-label="Escolher lista"></select>
+      <button class="icone" id="menu-lista" aria-label="Opções da lista">⋯</button>
+    </div>
+    <div class="resumo">
+      <div><small>Itens</small><b id="r-itens">0/0</b></div>
+      <div><small>Total estimado</small><b id="r-total">R$ 0,00</b></div>
+      <div><small>No carrinho</small><b id="r-carrinho">R$ 0,00</b></div>
+    </div>
+    <div class="orc" id="orc-box"><div class="orc__barra"><i id="orc-barra"></i></div><span id="orc-txt"></span></div>
+  </header>
+
+  <main class="app">
+    <form class="add" id="form-add" autocomplete="off">
+      <input id="novo" list="historico" placeholder='Adicionar item… ex.: "2 kg arroz 25,90"' aria-label="Novo item" maxlength="80">
+      <datalist id="historico"></datalist>
+      <button class="btn">+</button>
+    </form>
+    <p class="dica">Dica: escreva a quantidade antes e o preço no fim. A seção do mercado é escolhida sozinha.</p>
+
+    <div class="filtro" role="group" aria-label="Mostrar">
+      <button data-ver="todos" aria-pressed="true">Todos</button>
+      <button data-ver="falta" aria-pressed="false">Falta pegar</button>
+      <button data-ver="pegos" aria-pressed="false">No carrinho</button>
+    </div>
+    <div id="secoes"></div>
+    <div class="vazio" id="vazio" hidden><span>🧺</span><p>Lista vazia. Adicione o primeiro item acima.</p></div>
+
+    <div class="rodape-acoes">
+      <button class="btn ghost" id="compartilhar">📲 Enviar no WhatsApp</button>
+      <button class="btn ghost" id="copiar">📋 Copiar lista</button>
+      <button class="btn ghost" id="limpar-pegos">✓ Tirar itens pegos</button>
+    </div>
+  </main>
+
+  <dialog class="dlg" id="dlg-item" aria-labelledby="dlg-titulo">
+    <form method="dialog">
+      <h2 id="dlg-titulo">Editar item</h2>
+      <label>Nome<input id="i-nome" required maxlength="60"></label>
+      <div class="duas">
+        <label>Quantidade<input id="i-qtd" inputmode="decimal"></label>
+        <label>Unidade<select id="i-un"><option value="un">un</option><option>kg</option><option>g</option><option>L</option><option>ml</option><option>pct</option><option>cx</option><option>dz</option></select></label>
+      </div>
+      <div class="duas">
+        <label>Preço <small id="i-preco-dica">(por un, kg ou L; em g/ml, da embalagem)</small><input id="i-preco" inputmode="decimal" placeholder="0,00"></label>
+        <label>Seção<select id="i-sec"></select></label>
+      </div>
+      <label>Observação<input id="i-obs" maxlength="80" placeholder="Ex.: marca X, sem lactose"></label>
+      <footer><button type="button" class="btn perigo" id="i-excluir">Excluir</button><span></span><button class="btn ghost" value="cancelar" formnovalidate>Cancelar</button><button class="btn" value="salvar">Salvar</button></footer>
+    </form>
+  </dialog>
+
+  <dialog class="dlg" id="dlg-lista" aria-labelledby="dl-titulo">
+    <form method="dialog">
+      <h2 id="dl-titulo">Lista</h2>
+      <label>Nome da lista<input id="l-nome" maxlength="40"></label>
+      <label>Orçamento <small>(opcional)</small><input id="l-orc" inputmode="decimal" placeholder="Ex.: 300,00"></label>
+      <div class="lista-acoes">
+        <button type="button" class="btn ghost" id="l-nova">+ Nova lista</button>
+        <button type="button" class="btn ghost" id="l-duplicar">Duplicar lista</button>
+        <button type="button" class="btn ghost" id="l-desmarcar">Desmarcar todos</button>
+        <button type="button" class="btn perigo" id="l-excluir">Excluir lista</button>
+      </div>
+      <footer><span></span><button class="btn ghost" value="cancelar" formnovalidate>Fechar</button><button class="btn" value="salvar">Salvar</button></footer>
+    </form>
+  </dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script src="js/script.js"></script>
+</body>
+</html>
